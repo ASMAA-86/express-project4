@@ -115,6 +115,7 @@ router.patch("/change-password", tokenAuth, (req, res, next) => {
 
 
 
+
 //To show all trainer in Home Page?
 router.get('/api/users',(req,res)=>{
 
@@ -124,7 +125,69 @@ router.get('/api/users',(req,res)=>{
   })
 
 
+  //To update one user
+router.patch("/api/user/:id", (req, res, next) => {
+  //console.log('id is ', req.params.id);
+  //console.log('body is ', req.body);
+  //using id to find the user
+  //using update method to modify data
+  User.findByPk(req.params.id)
+    .then(user => {
+      return user.update({
+        email: req.body.user.email,
+        name: req.body.user.name,
+        phone: req.body.user.phone,
+        address:  req.body.user.address,
+        car: req.body.user.car,
+        cost: req.body.user.cost,
+        avalable: req.body.user.avalable
+      })
+    })
+    .then(user => res.status(200).json(user))
+    .catch(e => console.log(e));
+});
 
+
+//To show one user
+router.get("/user/:id",(req,res,next)=>{
+  //For test
+  //res.status(200).json({ msg: 'still working'});
+  models.User.findByPk(req.params.id).then(user =>
+      {
+  res.status(200).json({user:user})
+      }).catch(e => console.log(e));
+  
+  })
+
+  //To create new one
+// router.post('/api/user',(req,res, next) =>  {
+//   //need to test your data first
+//   models.User.create(req.body)
+//   .then(usereNewFromDB => {
+//       res.status(201).json({ user:userNewFromDB });
+
+//   })
+//   .catch(e => console.log(e));
+
+// });
+   
+
+  //To delete one user
+  router.delete('/api/user/:id', (req, res, next) => {
+    models.User.findByPk(req.params.id)
+    //person is reference to the record
+    .then(user => {
+        user.destroy()
+        .then(()=>{res.status(200).json({
+            result:`Record ID ${req.params.id} Deleted`,
+            success: true
+        });
+        
+    })
+    .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
+});
 
 
 export default router;
