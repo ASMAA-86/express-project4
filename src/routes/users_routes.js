@@ -159,17 +159,8 @@ router.get("/user/:id",(req,res,next)=>{
   
   })
 
-  //To create new one
-// router.post('/api/user',(req,res, next) =>  {
-//   //need to test your data first
-//   models.User.create(req.body)
-//   .then(usereNewFromDB => {
-//       res.status(201).json({ user:userNewFromDB });
-
-//   })
-//   .catch(e => console.log(e));
-
-// });
+  
+  //To post is already when they sign up
    
 
   //To delete one user
