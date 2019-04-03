@@ -21,13 +21,14 @@ router.post("/sign-up", (req, res, next) => {
       ) {
         throw new BadParamsError();
       } else {
+        console.log(credentials)
         return User.create({
           email: credentials.email,
           hashedPassword: credentials.password,
           name: credentials.name,
           phone: credentials.phone,
           address:  credentials.address,
-          car:  JSON.parse(credentials.car),
+          car:  credentials.car,
           cost: parseFloat(credentials.cost),
           avalable: credentials.avalable
         })
